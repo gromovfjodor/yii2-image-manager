@@ -52,7 +52,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
 		</div>
 
-		<div class="col-overview">
+		<div class="col-12 col-sm-9 col-md-9 <!--col-overview-->">
 
 			<?php Pjax::begin([
 				'id'=>'pjax-mediamanager',
@@ -63,6 +63,12 @@ $this->title = Yii::t('imagemanager','Image manager');
 				'dataProvider' => $dataProvider,
 				'itemOptions' => ['class' => 'item img-thumbnail'],
 				'layout' => "<div class='item-overview'>{items}</div> {pager}",
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemOptions'  => [
+                    'tag' => false,
+                ],
 				'itemView' => function ($model, $key, $index, $widget) {
 					return $this->render("_item", ['model' => $model]);
 				},
@@ -72,7 +78,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
 		</div>
 
-		<div class="col-6 col-sm-3 col-options">
+		<div class="col-12 col-sm-3 col-md-3 <!--col-options-->">
 
 			<div class="form-group">
 
