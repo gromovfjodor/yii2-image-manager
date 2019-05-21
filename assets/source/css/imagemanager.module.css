@@ -56,7 +56,10 @@
     padding:1rem 1.5rem
 }
 
-.file-caption{
+.file-caption.form-control.kv-fileinput-caption{
     display: none
 }
 
+.input-group-btn.input-group-append{
+    margin-left: 1rem
+}
