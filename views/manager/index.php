@@ -10,7 +10,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 ?>
 <div id="module-imagemanager" class="<?=$selectType?>">
 
-	<div class="row">
+	<div class="">
 
 		<div class="col-image-editor">
 
@@ -52,7 +52,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
 		</div>
 
-		<div class="col-12 col-sm-9 col-md-9 <!--col-overview-->">
+		<div class="col-overview">
 
 			<?php Pjax::begin([
 				'id'=>'pjax-mediamanager',
@@ -78,7 +78,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
 		</div>
 
-		<div class="col-12 col-sm-3 col-md-3 <!--col-options-->">
+		<div class="col-options">
 
 			<div class="form-group">
 
