@@ -116,7 +116,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
             <div class="image-info hide row">
 
-                <div class="col-12 col-sm-4 col-md-4">
+                <div class="col-6 col-sm-4 col-md-4">
 
                     <div class="thumbnail">
 
@@ -138,7 +138,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                 </div>
 
-                <div class="col-12 col-sm-8 col-md-8">
+                <div class="col-6 col-sm-8 col-md-8">
 
                     <div class="details">
 
