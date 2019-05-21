@@ -102,20 +102,20 @@ class ImageManagerInputWidget extends InputWidget
             }
 
             //create field
-            $field .= Html::textInput($this->attribute, $ImageManager_fileName, ['class' => 'form-control', 'id' => $sFieldNameId, 'readonly' => true]);
+            $field .= Html::hiddenInput($this->attribute, $ImageManager_fileName, ['class' => 'form-control', 'id' => $sFieldNameId, 'readonly' => true]);
             $field .= Html::activeHiddenInput($this->model, $this->attribute, $this->options);
         } else {
-            $field .= Html::textInput($this->name . "_name", null, ['readonly' => true]);
+            $field .= Html::hiddenInput($this->name . "_name", null, ['readonly' => true]);
             $field .= Html::hiddenInput($this->name, $this->value, $this->options);
         }
         //end input group
         $sHideClass = $ImageManager_id === null ? 'hide' : '';
         if (!$this->hideDeleteButton) {
-            $field .= "<span class='input-group-addon btn btn-clear hide btn-danger delete-selected-image" . $sHideClass . "' data-input-id='" . $sFieldId . "' data-show-delete-confirm='" . ($this->showDeletePickedImageConfirm ? "true" : "false") . "'></span>";
+            $field .= "<span style='display:none' class='input-group-addon btn btn-clear hide btn-danger delete-selected-image" . $sHideClass . "' data-input-id='" . $sFieldId . "' data-show-delete-confirm='" . ($this->showDeletePickedImageConfirm ? "true" : "false") . "'></span>";
         }
         // auto open class
         $autoOpen = $this->autoOpenModal ? 'auto-open-modal-imagemanager' : '';
-        $field .= "<span class='input-group-addon btn btn-open btn-primary open-modal-imagemanager $autoOpen' data-aspect-ratio='" . $this->aspectRatio . "' data-crop-view-mode='" . $this->cropViewMode . "' data-input-id='" . $sFieldId . "'>";
+        $field .= "<span style='display:none' class='input-group-addon btn btn-open btn-primary open-modal-imagemanager $autoOpen' data-aspect-ratio='" . $this->aspectRatio . "' data-crop-view-mode='" . $this->cropViewMode . "' data-input-id='" . $sFieldId . "'>";
         $field .= "<i class='glyphicon glyphicon-folder-open' aria-hidden='true'></i>";
         $field .= "</span></div>";
 
