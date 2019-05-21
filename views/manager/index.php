@@ -10,128 +10,121 @@ $this->title = Yii::t('imagemanager','Image manager');
 ?>
 <div id="module-imagemanager" class="<?=$selectType?>">
 
-	<div class="">
+    <div class="row">
 
-		<div class="col-image-editor">
+        <div class="search-and-upload">
 
-			<div class="image-cropper">
+            <?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
 
-				<div class="image-wrapper">
+            <?php
+            if (Yii::$app->controller->module->canUploadImage):
+                ?>
 
-					<img id="image-cropper" />
-
-				</div>
-
-				<div class="action-buttons">
-
-					<a href="#" class="btn btn-primary apply-crop">
-
-						<span class="hidden-xs"><?=Yii::t('imagemanager','Crop')?></span>
-
-					</a>
-
-					<?php if($viewMode === "iframe"): ?>
-
-					<a href="#" class="btn btn-primary apply-crop-select">
-
-					    	<span class="hidden-xs"><?=Yii::t('imagemanager','Crop and select')?></span>
-
-					</a>
-
-					<?php endif; ?>
-
-					<a href="#" class="btn btn-xs btn-danger cancel-crop">
-
-				    	<span class="hidden-xs"><?=Yii::t('imagemanager','Cancel')?></span>
-
-					</a>
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<div class="col-overview">
-
-			<?php Pjax::begin([
-				'id'=>'pjax-mediamanager',
-				'timeout'=>'5000'
-			]); ?>
-
-			<?= ListView::widget([
-				'dataProvider' => $dataProvider,
-				'itemOptions' => ['class' => 'item img-thumbnail'],
-				'layout' => "<div class='item-overview'>{items}</div> {pager}",
+                <?=FileInput::widget([
+                'name' => 'imagemanagerFiles[]',
+                'id' => 'imagemanager-files',
                 'options' => [
-                    'tag' => false,
+                    'multiple' => true,
+                    'accept' => 'image/*'
                 ],
-                'itemOptions'  => [
-                    'tag' => false,
+                'pluginOptions' => [
+                    'uploadUrl' => Url::to(['manager/upload']),
+                    'allowedFileExtensions' => \Yii::$app->controller->module->allowedFileExtensions,
+                    'uploadAsync' => false,
+                    'showPreview' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'browseClass' => 'btn btn-primary btn-block',
+                    'browseLabel' => Yii::t('imagemanager','Upload')
                 ],
-				'itemView' => function ($model, $key, $index, $widget) {
-					return $this->render("_item", ['model' => $model]);
-				},
-			]) ?>
+                'pluginEvents' => [
+                    "filebatchselected" => "function(event, files){  $('.msg-invalid-file-extension').addClass('hide'); $(this).fileinput('upload'); }",
+                    "filebatchuploadsuccess" => "function(event, data, previewId, index) {
+						imageManagerModule.uploadSuccess(data.jqXHR.responseJSON.imagemanagerFiles);
+					}",
+                    "fileuploaderror" => "function(event, data) { $('.msg-invalid-file-extension').removeClass('hide'); }",
+                ],
+            ]) ?>
 
-			<?php Pjax::end(); ?>
+            <?php
+            endif;
+            ?>
+        </div>
 
-		</div>
+        <div class="col-image-editor">
 
-		<div class="col-options">
+            <div class="image-cropper">
 
-			<div class="form-group">
+                <div class="image-wrapper">
 
-				<?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
+                    <img id="image-cropper" />
+
+                </div>
+
+                <div class="action-buttons">
+
+                    <a href="#" class="btn btn-primary apply-crop">
+
+                        <span class="hidden-xs"><?=Yii::t('imagemanager','Crop')?></span>
+
+                    </a>
+
+                    <?php if($viewMode === "iframe"): ?>
+
+                        <a href="#" class="btn btn-primary apply-crop-select">
+
+                            <span class="hidden-xs"><?=Yii::t('imagemanager','Crop and select')?></span>
+
+                        </a>
+
+                    <?php endif; ?>
+
+                    <a href="#" class="btn btn-xs btn-danger cancel-crop">
+
+                        <span class="hidden-xs"><?=Yii::t('imagemanager','Cancel')?></span>
+
+                    </a>
+
+                </div>
 
             </div>
 
-			<?php
-				if (Yii::$app->controller->module->canUploadImage):
-			?>
+        </div>
 
-			<?=FileInput::widget([
-				'name' => 'imagemanagerFiles[]',
-				'id' => 'imagemanager-files',
-				'options' => [
-					'multiple' => true,
-					'accept' => 'image/*'
-				],
-				'pluginOptions' => [
-					'uploadUrl' => Url::to(['manager/upload']),
-					'allowedFileExtensions' => \Yii::$app->controller->module->allowedFileExtensions,
-					'uploadAsync' => false,
-					'showPreview' => false,
-					'showRemove' => false,
-					'showUpload' => false,
-					'showCancel' => false,
-					'browseClass' => 'btn btn-primary btn-block',
-					'browseLabel' => Yii::t('imagemanager','Upload')
-				],
-				'pluginEvents' => [
-					"filebatchselected" => "function(event, files){  $('.msg-invalid-file-extension').addClass('hide'); $(this).fileinput('upload'); }",
-					"filebatchuploadsuccess" => "function(event, data, previewId, index) {
-						imageManagerModule.uploadSuccess(data.jqXHR.responseJSON.imagemanagerFiles);
-					}",
-					"fileuploaderror" => "function(event, data) { $('.msg-invalid-file-extension').removeClass('hide'); }",
-				],
-			]) ?>
+        <div class="col-overview">
 
-			<?php
-				endif;
-			?>
+            <?php Pjax::begin([
+                'id'=>'pjax-mediamanager',
+                'timeout'=>'5000'
+            ]); ?>
 
-			<div class="image-info hide">
+            <?= ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemOptions' => ['class' => 'item img-thumbnail'],
+                'layout' => "<div class='item-overview'>{items}</div> {pager}",
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render("_item", ['model' => $model]);
+                },
+            ]) ?>
 
-				<div class="thumbnail">
+            <?php Pjax::end(); ?>
 
-					<img src="/images/img_no-image.png" alt="Изображение">
+        </div>
 
-				</div>
+        <div class="col-12 col-options">
 
-				<div class="edit-buttons js-edit-buttons">
+            <div class="image-info hide">
 
-					<button class="btn btn-primary btn-block crop-image-item" disabled><?=Yii::t('imagemanager','Crop')?></button>
+                <div class="thumbnail">
+
+                    <img src="/images/img_no-image.png" alt="Изображение">
+
+                </div>
+
+                <div class="edit-buttons js-edit-buttons">
+
+                    <button class="btn btn-primary btn-block crop-image-item" disabled><?=Yii::t('imagemanager','Crop')?></button>
 
                     <?php if (Yii::$app->controller->module->canRemoveImage):  ?>
 
@@ -139,9 +132,9 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                     <?php endif; ?>
 
-				</div>
+                </div>
 
-				<div class="details">
+                <div class="details">
 
                     <h4 class="details__title"><?=Yii::t('imagemanager','Details text')?></h4>
 
@@ -157,17 +150,17 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                     <!--<div class="dimensions"><span class="dimension-width"></span> &times; <span class="dimension-height"></span></div>-->
 
-				</div>
+                </div>
 
-				<?php if($viewMode === "iframe"): ?>
+                <?php if($viewMode === "iframe"): ?>
 
-				<a href="#" class="btn btn-primary btn-block pick-image-item"><?=Yii::t('imagemanager','Select')?></a>
+                    <a href="#" class="btn btn-primary btn-block pick-image-item"><?=Yii::t('imagemanager','Select')?></a>
 
-				<?php endif; ?>
-			</div>
+                <?php endif; ?>
+            </div>
 
-		</div>
+        </div>
 
-	</div>
+    </div>
 
 </div>
