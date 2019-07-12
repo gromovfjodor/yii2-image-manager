@@ -80,7 +80,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                     <?php endif; ?>
 
-                    <a href="#" class="btn btn-xs btn-danger cancel-crop">
+                    <a href="#" class="btn btn-danger cancel-crop">
 
                         <span class="hidden-xs"><?=Yii::t('imagemanager','Cancel')?></span>
 
@@ -130,7 +130,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                         <?php if (Yii::$app->controller->module->canRemoveImage):  ?>
 
-                            <button class="btn btn-xs btn-danger delete-image-item" disabled><?=Yii::t('imagemanager','Delete')?></button>
+                            <button class="btn btn-danger delete-image-item" disabled><?=Yii::t('imagemanager','Delete')?></button>
 
                         <?php endif; ?>
 
