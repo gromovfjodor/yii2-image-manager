@@ -48,11 +48,6 @@
 /* empty */
 .empty{padding:1rem /* "Ничего не найдено" */}
 
-.search-and-upload{
-    display: flex;
-    width:100%;
-    padding:1rem 1.5rem
-}
 
 .search-and-upload #input-mediamanager-search{
     width:100%
@@ -68,10 +63,6 @@
 
 #pjax-mediamanager{
     display: flex;
-}
-
-#pjax-mediamanager{
-    padding: 15px;
 }
 
 #pjax-mediamanager .pagination{
