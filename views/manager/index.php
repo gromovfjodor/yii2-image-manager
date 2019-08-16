@@ -108,29 +108,55 @@ $this->title = Yii::t('imagemanager','Image manager');
                 },
             ]) ?>
 
-            <?php Pjax::end(); ?>
+            <div class="col-12 col-options">
 
-        </div>
+                <div class="image-info hide row">
 
-        <div class="col-12 col-options">
+                    <div class="col-6 col-sm-4 col-md-4">
 
-            <div class="image-info hide row">
+                        <div class="thumbnail">
 
-                <div class="col-6 col-sm-4 col-md-4">
+                            <img src="/images/img_no-image.png" alt="Изображение">
 
-                    <div class="thumbnail">
+                        </div>
 
-                        <img src="/images/img_no-image.png" alt="Изображение">
+                        <div class="edit-buttons js-edit-buttons">
+
+                            <button class="btn btn-primary btn-block crop-image-item" disabled><?=Yii::t('imagemanager','Crop')?></button>
+
+                            <?php if (Yii::$app->controller->module->canRemoveImage):  ?>
+
+                                <button class="btn btn-danger delete-image-item" disabled><?=Yii::t('imagemanager','Delete')?></button>
+
+                            <?php endif; ?>
+
+                        </div>
 
                     </div>
 
-                    <div class="edit-buttons js-edit-buttons">
+                    <div class="col-6 col-sm-8 col-md-8">
 
-                        <button class="btn btn-primary btn-block crop-image-item" disabled><?=Yii::t('imagemanager','Crop')?></button>
+                        <div class="details">
 
-                        <?php if (Yii::$app->controller->module->canRemoveImage):  ?>
+                            <h4 class="details__title"><?=Yii::t('imagemanager','Details text')?></h4>
 
-                            <button class="btn btn-danger delete-image-item" disabled><?=Yii::t('imagemanager','Delete')?></button>
+                            <ul class="details__list">
+
+                                <li class="details__item"><span class="details__subtitle"><?=Yii::t('imagemanager','File name')?>: </span><span class="fileName"></span></li>
+
+                                <li class="details__item"><span class="details__subtitle"><?=Yii::t('imagemanager','File create')?>: </span><span class="created"></span></li>
+
+                                <li class="details__item"><span class="details__subtitle"><?=Yii::t('imagemanager','File size')?>: </span><span class="fileSize"></span></li>
+
+                            </ul>
+
+                            <!--<div class="dimensions"><span class="dimension-width"></span> &times; <span class="dimension-height"></span></div>-->
+
+                        </div>
+
+                        <?php if($viewMode === "iframe"): ?>
+
+                            <a href="#" class="btn btn-primary btn-block pick-image-item"><?=Yii::t('imagemanager','Select')?></a>
 
                         <?php endif; ?>
 
@@ -138,35 +164,9 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                 </div>
 
-                <div class="col-6 col-sm-8 col-md-8">
-
-                    <div class="details">
-
-                        <h4 class="details__title"><?=Yii::t('imagemanager','Details text')?></h4>
-
-                        <ul class="details__list">
-
-                            <li class="details__item"><span class="details__subtitle"><?=Yii::t('imagemanager','File name')?>: </span><span class="fileName"></span></li>
-
-                            <li class="details__item"><span class="details__subtitle"><?=Yii::t('imagemanager','File create')?>: </span><span class="created"></span></li>
-
-                            <li class="details__item"><span class="details__subtitle"><?=Yii::t('imagemanager','File size')?>: </span><span class="fileSize"></span></li>
-
-                        </ul>
-
-                        <!--<div class="dimensions"><span class="dimension-width"></span> &times; <span class="dimension-height"></span></div>-->
-
-                    </div>
-
-                    <?php if($viewMode === "iframe"): ?>
-
-                        <a href="#" class="btn btn-primary btn-block pick-image-item"><?=Yii::t('imagemanager','Select')?></a>
-
-                    <?php endif; ?>
-
-                </div>
-
             </div>
+
+            <?php Pjax::end(); ?>
 
         </div>
 
