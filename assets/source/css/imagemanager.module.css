@@ -24,7 +24,6 @@
 #module-imagemanager > .row .col-options .btn-file:before{content: "\f149"; font-family:Flaticon; margin-right:.2rem}
 /*File upload*/
 #imagemanager-files{cursor:pointer}
-#module-imagemanager  .file-caption-main{justify-content:flex-end}
 #module-imagemanager > .row .col-options .file-input .form-control{ display: none; }
 /*details*/
 #module-imagemanager > .row .col-options .image-info{width:100%; padding:1rem 0}
@@ -56,15 +55,11 @@
 }
 
 .search-and-upload #input-mediamanager-search{
-    width:240px
+    width:100%
 }
 
 .file-caption.form-control.kv-fileinput-caption{
     display: none
-}
-
-.input-group-btn.input-group-append{
-    margin-left: 1rem
 }
 
 .input-group>input.form-control{
