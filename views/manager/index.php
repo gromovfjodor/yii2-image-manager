@@ -19,10 +19,10 @@ $this->title = Yii::t('imagemanager','Image manager');
                 <h4 class="card-filter__title">Загрзка изображения</h4>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php
                         if (Yii::$app->controller->module->canUploadImage):
                             ?>
