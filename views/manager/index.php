@@ -18,44 +18,47 @@ $this->title = Yii::t('imagemanager','Image manager');
 
                 <h4 class="card-filter__title">Загрзка изображения</h4>
 
-                <?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        if (Yii::$app->controller->module->canUploadImage):
+                            ?>
 
-                <?php
-                if (Yii::$app->controller->module->canUploadImage):
-                    ?>
-
-                    <?=FileInput::widget([
-                    'name' => 'imagemanagerFiles[]',
-                    'id' => 'imagemanager-files',
-                    'options' => [
-                        'multiple' => true,
-                        'accept' => 'image/*'
-                    ],
-                    'pluginOptions' => [
-                        'uploadUrl' => Url::to(['manager/upload']),
-                        'allowedFileExtensions' => \Yii::$app->controller->module->allowedFileExtensions,
-                        'uploadAsync' => false,
-                        'showPreview' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'showCancel' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseLabel' => Yii::t('imagemanager','Upload')
-                    ],
-                    'pluginEvents' => [
-                        "filebatchselected" => "function(event, files){  $('.msg-invalid-file-extension').addClass('hide'); $(this).fileinput('upload'); }",
-                        "filebatchuploadsuccess" => "function(event, data, previewId, index) {
+                            <?=FileInput::widget([
+                            'name' => 'imagemanagerFiles[]',
+                            'id' => 'imagemanager-files',
+                            'options' => [
+                                'multiple' => true,
+                                'accept' => 'image/*'
+                            ],
+                            'pluginOptions' => [
+                                'uploadUrl' => Url::to(['manager/upload']),
+                                'allowedFileExtensions' => \Yii::$app->controller->module->allowedFileExtensions,
+                                'uploadAsync' => false,
+                                'showPreview' => false,
+                                'showRemove' => false,
+                                'showUpload' => false,
+                                'showCancel' => false,
+                                'browseClass' => 'btn btn-primary btn-block',
+                                'browseLabel' => Yii::t('imagemanager','Upload')
+                            ],
+                            'pluginEvents' => [
+                                "filebatchselected" => "function(event, files){  $('.msg-invalid-file-extension').addClass('hide'); $(this).fileinput('upload'); }",
+                                "filebatchuploadsuccess" => "function(event, data, previewId, index) {
                             imageManagerModule.uploadSuccess(data.jqXHR.responseJSON.imagemanagerFiles);
                         }",
-                        "fileuploaderror" => "function(event, data) { $('.msg-invalid-file-extension').removeClass('hide'); }",
-                    ],
-                ]) ?>
+                                "fileuploaderror" => "function(event, data) { $('.msg-invalid-file-extension').removeClass('hide'); }",
+                            ],
+                        ]);
+                        endif;
+                        ?>
+                    </div>
+                </div>
 
-                <?php
-                endif;
-                ?>
-                
-            </div>
+             </div>
 
         </div>
 
