@@ -48,7 +48,9 @@
 /* empty */
 .empty{padding:1rem /* "Ничего не найдено" */}
 
-
+.search-and-upload{
+    width: 100%;
+}
 .search-and-upload #input-mediamanager-search{
     width:100%
 }

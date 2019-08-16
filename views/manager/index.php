@@ -17,7 +17,7 @@ $this->title = Yii::t('imagemanager','Image manager');
 
         <div class="row">
 
-            <div class="search-and-upload col-12">
+            <div class="search-and-upload">
 
                 <div class="card-filter">
 
