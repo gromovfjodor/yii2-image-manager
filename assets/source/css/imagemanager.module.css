@@ -78,3 +78,9 @@
 #pjax-mediamanager{
     padding: 15px;
 }
+
+#pjax-mediamanager .pagination{
+    margin: 0;
+    background: #fff;
+    padding:1rem 0
+}
