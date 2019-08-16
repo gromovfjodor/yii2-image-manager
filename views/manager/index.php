@@ -12,44 +12,51 @@ $this->title = Yii::t('imagemanager','Image manager');
 
     <div class="row">
 
-        <div class="search-and-upload">
+        <div class="search-and-upload col-12">
 
-            <?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
+            <div class="card-filter">
 
-            <?php
-            if (Yii::$app->controller->module->canUploadImage):
+                <h4 class="card-filter__title">Загрзка изображения</h4>
+
+                <?=Html::textInput('input-mediamanager-search', null, ['id'=>'input-mediamanager-search', 'class'=>'form-control', 'placeholder'=>Yii::t('imagemanager','Search').'...'])?>
+
+                <?php
+                if (Yii::$app->controller->module->canUploadImage):
+                    ?>
+
+                    <?=FileInput::widget([
+                    'name' => 'imagemanagerFiles[]',
+                    'id' => 'imagemanager-files',
+                    'options' => [
+                        'multiple' => true,
+                        'accept' => 'image/*'
+                    ],
+                    'pluginOptions' => [
+                        'uploadUrl' => Url::to(['manager/upload']),
+                        'allowedFileExtensions' => \Yii::$app->controller->module->allowedFileExtensions,
+                        'uploadAsync' => false,
+                        'showPreview' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'showCancel' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseLabel' => Yii::t('imagemanager','Upload')
+                    ],
+                    'pluginEvents' => [
+                        "filebatchselected" => "function(event, files){  $('.msg-invalid-file-extension').addClass('hide'); $(this).fileinput('upload'); }",
+                        "filebatchuploadsuccess" => "function(event, data, previewId, index) {
+                            imageManagerModule.uploadSuccess(data.jqXHR.responseJSON.imagemanagerFiles);
+                        }",
+                        "fileuploaderror" => "function(event, data) { $('.msg-invalid-file-extension').removeClass('hide'); }",
+                    ],
+                ]) ?>
+
+                <?php
+                endif;
                 ?>
+                
+            </div>
 
-                <?=FileInput::widget([
-                'name' => 'imagemanagerFiles[]',
-                'id' => 'imagemanager-files',
-                'options' => [
-                    'multiple' => true,
-                    'accept' => 'image/*'
-                ],
-                'pluginOptions' => [
-                    'uploadUrl' => Url::to(['manager/upload']),
-                    'allowedFileExtensions' => \Yii::$app->controller->module->allowedFileExtensions,
-                    'uploadAsync' => false,
-                    'showPreview' => false,
-                    'showRemove' => false,
-                    'showUpload' => false,
-                    'showCancel' => false,
-                    'browseClass' => 'btn btn-primary btn-block',
-                    'browseLabel' => Yii::t('imagemanager','Upload')
-                ],
-                'pluginEvents' => [
-                    "filebatchselected" => "function(event, files){  $('.msg-invalid-file-extension').addClass('hide'); $(this).fileinput('upload'); }",
-                    "filebatchuploadsuccess" => "function(event, data, previewId, index) {
-						imageManagerModule.uploadSuccess(data.jqXHR.responseJSON.imagemanagerFiles);
-					}",
-                    "fileuploaderror" => "function(event, data) { $('.msg-invalid-file-extension').removeClass('hide'); }",
-                ],
-            ]) ?>
-
-            <?php
-            endif;
-            ?>
         </div>
 
         <div class="col-image-editor">
